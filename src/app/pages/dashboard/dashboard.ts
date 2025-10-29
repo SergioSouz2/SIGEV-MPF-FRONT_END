@@ -26,9 +26,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userName = this.authService.getUserName();
-    this.carregarEstatisticas();
-  }
+  this.userName = this.authService.getUserName();
+  this.isUserAdmin = this.authService.getUserRole() === 'ADMIN';
+  this.carregarEstatisticas();
+}
 
   carregarEstatisticas(): void {
     this.visitantesHoje = 12;

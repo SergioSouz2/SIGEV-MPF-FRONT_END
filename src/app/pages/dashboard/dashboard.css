@@ -1,9 +1,12 @@
 /* Estilos Gerais */
 :host {
-  display: block;
+display: block;
+  width: 100vw;      /* largura da viewport */
+  height: 100vh;     /* altura da viewport */
   background-color: #f4f7fa;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box; /* inclui padding na largura/altura */
 }
 
 .dashboard-container {
@@ -18,6 +21,12 @@
   padding: 1.5rem;
   border: 1px solid #e0e0e0;
 }
+
+
+
+
+
+
 
 .btn {
   padding: 0.75rem 1.5rem;
@@ -95,15 +104,39 @@
   flex-direction: column;
 }
 
+.title{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .action-card h2 {
-  margin-top: 0;
   font-size: 1.2rem;
+  margin: 0;
 }
 
 .action-card p {
   color: #666;
-  flex-grow: 1; /* Empurra o botão para baixo */
-  margin-bottom: 1.5rem;
+  margin: 0;
+  margin-bottom: 1.2rem;
+
+  /* flex-grow: 1;
+  margin-bottom: 1.5rem; */
+}
+
+.action-card i.rv{
+  color: blue;
+
+}
+
+.action-card i.gv{
+  color: green;
+
+}
+
+.action-card i.pa{
+  color: purple;
+
 }
 
 

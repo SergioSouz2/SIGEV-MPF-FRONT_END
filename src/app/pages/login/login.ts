@@ -20,7 +20,6 @@ export class LoginComponent {
 
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
 
   onSubmit(): void {
     if (!this.email || !this.password) {

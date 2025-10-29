@@ -13,9 +13,6 @@ export class AuthService {
   private readonly router = inject(Router);
 
   login(credentials: LoginCredentials): Observable<AuthResponse> {
-    console.log('Ambiente:', environment.production ? 'Produção' : 'Desenvolvimento');
-    console.log('URL da API:', environment.apiUrl);
-
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -33,6 +30,7 @@ export class AuthService {
         // Salva o token e o nome do usuário no localStorage
         localStorage.setItem('token', response.token);
         localStorage.setItem('userName', response.name);
+        localStorage.setItem('role', response.role);
       })
     );
   }
@@ -52,5 +50,9 @@ export class AuthService {
 
   getUserName(): string {
     return localStorage.getItem('userName') || 'Usuário';
+  }
+
+  getUserRole(): string {
+    return localStorage.getItem('role') ?? 'USER';
   }
 }

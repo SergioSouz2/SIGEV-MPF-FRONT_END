@@ -14,38 +14,45 @@
 
   <main class="dashboard-content">
     <section class="action-cards">
+
+
       <div class="card action-card">
-        <div class="card-icon">
-          <i class="fas fa-user-plus"></i>
-        </div>
         <div class="card-body">
-          <h2>Registrar Visitante</h2>
+          <div class="title">
+            <i class="fas fa-user-plus rv"></i>
+            <h2>Registrar Visitante</h2>
+          </div>
           <p>Cadastrar nova visita no sistema</p>
-          <button class="btn btn-primary" routerLink="/nova-visita">Nova Visita</button>
         </div>
+        <button class="btn btn-primary" routerLink="/nova-visita">Nova Visita</button>
       </div>
 
       <div class="card action-card">
-        <div class="card-icon">
-          <i class="fas fa-users"></i>
-        </div>
         <div class="card-body">
-          <h2>Gerenciar Visitantes</h2>
+          <div class="title">
+            <i class="far fa-clock gv"></i>
+            <h2>Gerenciar Visitantes</h2>
+          </div>
           <p>Ver e gerenciar visitantes no prédio</p>
-          <button class="btn btn-secondary" routerLink="/gerenciar-visitantes">Ver Visitantes</button>
         </div>
+        <button class="btn btn-secondary" routerLink="/gerenciar-visitantes">Ver Visitantes</button>
       </div>
 
-      <div class="card action-card" *ngIf="isUserAdmin">
-        <div class="card-icon">
-          <i class="fas fa-tools"></i>
-        </div>
+
+      <div class="card action-card">
         <div class="card-body">
-          <h2>Painel Admin</h2>
+          <div class="title">
+            <i class="fas fa-tools pa"></i>
+            <h2>Painel Admin</h2>
+          </div>
           <p>Gerenciar usuários e configurações</p>
-          <button class="btn btn-secondary" routerLink="/admin">Acessar</button>
         </div>
+        <button class="btn btn-secondary" routerLink="/admin">Acessar</button>
       </div>
+
+
+
+
     </section>
 
     <section class="stats-cards">
