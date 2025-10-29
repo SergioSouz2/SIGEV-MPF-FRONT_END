@@ -49,7 +49,9 @@ export class AuthService {
   }
 
   getUserName(): string {
-    return localStorage.getItem('userName') || 'Usuário';
+    const fullName = localStorage.getItem('userName') || 'Usuário';
+    const firstName = fullName.split(' ')[0];
+    return firstName.charAt(0).toUpperCase() + firstName.slice(1);
   }
 
   getUserRole(): string {
