@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router'; // 1. Importar o Router
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,12 +21,13 @@ export class DashboardComponent implements OnInit {
 
   // 2. Injetar o Router (além do AuthService que já estava)
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-
-
+    this.userName = this.authService.getUserName();
+    this.carregarEstatisticas();
   }
 
   carregarEstatisticas(): void {
@@ -34,8 +36,7 @@ export class DashboardComponent implements OnInit {
     this.totalDoMes = 245;
   }
 
-  // 3. Adicionar o método logout()
   logout(): void {
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 }

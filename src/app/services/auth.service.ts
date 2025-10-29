@@ -30,8 +30,9 @@ export class AuthService {
       }
     ).pipe(
       tap(response => {
-        // Salva o token no localStorage
+        // Salva o token e o nome do usuário no localStorage
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userName', response.name);
       })
     );
   }
@@ -47,5 +48,9 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  getUserName(): string {
+    return localStorage.getItem('userName') || 'Usuário';
   }
 }
