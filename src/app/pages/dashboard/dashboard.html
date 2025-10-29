@@ -24,7 +24,7 @@
           </div>
           <p>Cadastrar nova visita no sistema</p>
         </div>
-        <button class="btn btn-primary" routerLink="/nova-visita">Nova Visita</button>
+        <button class="btn btn-primary" routerLink="/registar-visitas">Nova Visita</button>
       </div>
 
       <div class="card action-card">
@@ -35,11 +35,11 @@
           </div>
           <p>Ver e gerenciar visitantes no prédio</p>
         </div>
-        <button class="btn btn-secondary" routerLink="/gerenciar-visitantes">Ver Visitantes</button>
+        <button class="btn btn-secondary" routerLink="/gerenciar-visitas">Ver Visitantes</button>
       </div>
 
 
-      <div class="card action-card">
+      <div class="card action-card" *ngIf="isUserAdmin">
         <div class="card-body">
           <div class="title">
             <i class="fas fa-tools pa"></i>
@@ -68,7 +68,7 @@
         <h3>Total do Mês</h3>
         <p class="stat-number">{{ totalDoMes }}</p>
       </div>
-      <div class="card stat-card profile-card">
+      <div class="card stat-card profile-card" *ngIf="isUserAdmin">
         <h3>Admin</h3>
         <p><i class="fas fa-user-cog"></i> Seu Perfil</p>
       </div>
