@@ -1,9 +1,9 @@
 // ARQUIVO: src/app/pages/login/login.ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-// O caminho deve estar correto agora
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +13,34 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-
   email: string = '';
-  senha: string = '';
+  password: string = ''; // Changed from 'senha' to 'password'
+  loading: boolean = false;
+  error: string = '';
+
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   onSubmit(): void {
-    console.log('Dados do formulário:', {
-      email: this.email,
-      senha: this.senha
-    });
+    if (!this.email || !this.password) {
+      this.error = 'Por favor, preencha todos os campos';
+      return;
+    }
+
+    this.loading = true;
+    this.error = '';
+
+    this.authService.login({ email: this.email, password: this.password })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Erro no login:', error);
+          this.error = 'Email ou senha inválidos';
+          this.loading = false;
+        }
+      });
   }
 }
