@@ -49,10 +49,8 @@ export class UserDialogComponent {
       telefone: [data?.telefone || ''],
       email: [data?.email || '', [Validators.required, Validators.email]],
       login: [data?.login || '', Validators.required],
-      password: [data?.password || '', Validators.required],
+      password: ['', data?.id ? [] : [Validators.required]], // 🔥 senha opcional na edição
       role: [data?.role || 'USER', Validators.required],
-      created_at: [data?.created_at || new Date()],
-      updated_at: [data?.updated_at || new Date()],
     });
   }
 

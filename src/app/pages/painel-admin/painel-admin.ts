@@ -106,6 +106,24 @@ export class AdminPanelComponent implements OnInit {
   }
 
 
+  editUser(user: User): void {
+  const dialogRef = this.dialog.open(UserDialogComponent, {
+    width: '700px',
+    data: user // 🔥 envia o usuário para o modal
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      // Atualiza a lista na tela
+      const index = this.users.findIndex(u => u.id === result.id);
+      if (index !== -1) {
+        this.users[index] = result;
+      }
+      this.updateStats();
+    }
+  });
+}
+
   private updateStats(): void {
     this.totalUsuarios = this.users.length;
     this.totalAdmins = this.users.filter(u => u.role === 'ADMIN').length;
