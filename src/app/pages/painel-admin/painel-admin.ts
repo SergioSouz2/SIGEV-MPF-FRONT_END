@@ -5,11 +5,15 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user.interface';
 import Swal from 'sweetalert2';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { UserDialogComponent } from '../../components/add-user-dialog/add-user-dialog';
+
+
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatDialogModule],
   templateUrl: './painel-admin.html',
   styleUrls: ['./painel-admin.css']
 })
@@ -28,6 +32,7 @@ export class AdminPanelComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private dialog: MatDialog,
     private router: Router,
   ) { }
 
@@ -56,6 +61,27 @@ export class AdminPanelComponent implements OnInit {
   }
 
 
+  openDialog(user?: User): void {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '600px',
+      data: user ? user : {}
+    });
+
+    dialogRef.afterClosed().subscribe((savedUser: User | undefined) => {
+      if (savedUser) {
+        // Recarrega a lista do servidor
+        this.carregarUsuarios();
+
+        // OU, se quiser atualizar localmente sem recarregar:
+        // const index = this.users.findIndex(u => u.id === savedUser.id);
+        // if (index > -1) this.users[index] = savedUser;
+        // else this.users.push(savedUser);
+
+        this.updateStats(); // Atualiza os contadores
+      }
+    });
+  }
+
 
   deleteUser(user: User): void {
     Swal.fire({
@@ -79,7 +105,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Novo método para atualizar estatísticas
+
   private updateStats(): void {
     this.totalUsuarios = this.users.length;
     this.totalAdmins = this.users.filter(u => u.role === 'ADMIN').length;
@@ -90,5 +116,17 @@ export class AdminPanelComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+
+  getRoleLabel(role: string): string {
+    switch (role.toUpperCase()) {
+      case 'ADMIN':
+        return 'Admin';
+      case 'USER':
+        return 'Atendente'; // neutro
+      default:
+        return role;
+    }
   }
 }

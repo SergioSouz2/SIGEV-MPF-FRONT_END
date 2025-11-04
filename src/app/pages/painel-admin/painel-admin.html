@@ -40,8 +40,7 @@
           <p>Adicione e gerencie usuários do sistema</p>
         </div>
 
-
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="openDialog()">
           <i class="fas fa-plus"></i> Adicionar Usuário
         </button>
       </div>
@@ -64,9 +63,11 @@
             <td>{{ user.email }}</td>
             <td>
               <span class="pill" [ngClass]="{
-                'pill-admin': user.role === 'ADMIN',
-                'pill-recepcionista': user.role === 'RECEPCIONISTA'
-              }">{{ user.role }}</span>
+      'pill-admin': user.role.toUpperCase() === 'ADMIN',
+      'pill-recepcionista': user.role.toUpperCase() === 'USER'
+    }">
+                {{ getRoleLabel(user.role) }}
+              </span>
             </td>
             <td>{{ user.cpf }}</td>
             <td>{{ user.telefone }}</td>

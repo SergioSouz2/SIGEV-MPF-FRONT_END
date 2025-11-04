@@ -12,4 +12,4 @@ export interface User {
   role: string;
   created_at?: string;          // Timestamp → string ISO no JSON
   updated_at?: string;
-}
+} 
