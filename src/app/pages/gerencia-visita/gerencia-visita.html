@@ -1,0 +1,178 @@
+<div class="page-container">
+  <header class="page-header">
+    <div class="header-title">
+      <h1>Gerenciar Visitantes</h1>
+      <p>Controle de entrada e saída</p>
+    </div>
+    <div class="header-actions">
+      <span class="user-tag">
+        <i class="fas fa-user-circle"></i> {{ userName }}
+      </span>
+
+      <button class="btn btn-secondary" (click)="voltadashboard()">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </button>
+
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Sair
+      </button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="stats-cards">
+      <div class="card stat-card color-indigo">
+        <h3>Ativos</h3>
+        <p class="stat-number">{{ visitasAtivas.length }}</p>
+      </div>
+      <div class="card stat-card color-green">
+        <h3>Registros Hoje</h3>
+        <p class="stat-number">{{ visitasHoje }}</p>
+      </div>
+      <div class="card stat-card color-yellow">
+        <h3>Total Mês</h3>
+        <p class="stat-number">{{ totalDoMes }}</p>
+      </div>
+      <div class="card stat-card color-red">
+        <h3>Saídas Hoje</h3>
+        <p class="stat-number">{{ saidasHoje }}</p>
+      </div>
+    </section>
+
+    
+
+    <section class="filter-tabs">
+      <div class="tabs">
+        <button class="tab-button" [class.active]="activeTab === 'ativos'" (click)="selecionarTab('ativos')">
+          <i class="fas fa-users"></i> Ativos ({{ visitasAtivas.length }})
+        </button>
+        <button class="tab-button" [class.active]="activeTab === 'historico'" (click)="selecionarTab('historico')">
+          <i class="fas fa-history"></i> Histórico
+        </button>
+      </div>
+    </section>
+
+    <section class="card visitor-list">
+      <div class="list-header">
+        <h2>Visitas</h2>
+      </div>
+
+      <div *ngIf="activeTab === 'ativos'">
+       
+
+
+      </div>
+
+      <!-- LISTA ATIVOS -->
+      <div *ngIf="activeTab === 'ativos'">
+
+        <div *ngIf="visitasAtivas.length === 0" class="empty-state">
+          <i class="fas fa-door-closed"></i>
+          <p>Nenhum visitante ativo no momento.</p>
+          <p class="text-secondary">Novos registros aparecem aqui.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table-pro">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Destino</th>
+                <th>Entrada</th>
+                <th style="width: 130px; text-align: center;">Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let visita of filtrar(visitasHistorico)">
+
+                <td>
+                  <span class="status-badge" [class.status-green]="visita.status === 'Em andamento'"
+                    [class.status-red]="visita.status !== 'Em andamento'">
+                    {{ visita.status }}
+                  </span>
+                </td>
+
+                <td>{{ visita.visitante.nomeCompleto }}</td>
+                <td>{{ visita.visitante.cpf }}</td>
+                <td>{{ visita.localDestino }}</td>
+
+                <td>
+                  <span *ngIf="visita.dataEntrada">{{ visita.dataEntrada | date:'HH:mm' }}</span>
+                  <button *ngIf="!visita.dataEntrada" class="btn-action btn-green"
+                    (click)="registrarEntrada(visita.id)">
+                    Entrada
+                  </button>
+                </td>
+
+
+
+                <td class="acoes-cell">
+                  <!-- ENTRADA -->
+                  <button class="icon-btn icon-green" *ngIf="!visita.dataEntrada" (click)="registrarEntrada(visita.id)">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                  </button>
+
+                  <!-- SAÍDA -->
+                  <button class="icon-btn icon-red" *ngIf="visita.dataEntrada && !visita.dataSaida"
+                    (click)="registrarSaida(visita.id)">
+                    <i class="fas fa-arrow-right-from-bracket"></i>
+                  </button>
+
+                  <!-- FINALIZADO -->
+                  <i *ngIf="visita.dataSaida" class="fas fa-circle-check finalizado"></i>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- LISTA HISTÓRICO -->
+      <div *ngIf="activeTab === 'historico'">
+        <div class="table-responsive">
+          <table class="table-pro">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let visita of filtrar(visitasHistorico)">
+
+                <td>
+                  <span class="status-badge" [class.status-green]="visita.status === 'Em andamento'"
+                    [class.status-red]="visita.status !== 'Em andamento'">
+                    {{ visita.status }}
+                  </span>
+                </td>
+
+                <td>{{ visita.visitante.nomeCompleto }}</td>
+                <td>{{ visita.visitante.cpf }}</td>
+
+                <td>{{ visita.dataEntrada | date:'dd/MM HH:mm' }}</td>
+
+                <td>
+                  <span *ngIf="visita.dataSaida">{{ visita.dataSaida | date:'dd/MM HH:mm' }}</span>
+                  <span *ngIf="!visita.dataSaida">-</span>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+    </section>
+  </main>
+</div>
